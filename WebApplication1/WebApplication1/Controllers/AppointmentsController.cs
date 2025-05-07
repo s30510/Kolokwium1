@@ -26,7 +26,19 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]NewAppointmentDto newAppointment)
         {
-            await _iService.AddAppointmentsAsync(newAppointment);
+            try
+            {
+                await _iService.AddAppointmentsAsync(newAppointment);
+            }
+            catch (NotFoundExpection__)
+            {
+                return NotFound();
+            }
+            catch (ConflictExpection)
+            {
+                return Conflict();
+            }
+            
             return Created();
         }
     }
